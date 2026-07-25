@@ -19,8 +19,7 @@ def main():
     df_raw = pd.read_csv(data_path)
     TRUE_ATE = -1.95
     
-    # ADVANCED DP CONFIGURATION
-    # We heavily optimize how we treat the data to preserve the causal signal
+    # DP CONFIGURATION
     dp_configs = {
         'x_loyalty': {
             'bounds': (0.0, 1.0),       # Loyalty is naturally bounded 0 to 1
