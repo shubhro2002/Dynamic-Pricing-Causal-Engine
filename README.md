@@ -154,7 +154,7 @@ Or,
 - In a new terminal, run the test script:
 
 ```bash
-python scripts/test_api.py
+python tests/test_api.py
 ```
 
 ## Key Takeaways & Architectural Trade-offs
