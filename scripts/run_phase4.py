@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.causal.dml_engine import DoubleMachineLearningEngine
 from src.data.privacy import DifferentialPrivacyLayer
+from core.config import settings
 
 def main():
     logger.info("--- Starting Phase 4: Optimized Differential Privacy ---")
@@ -36,7 +37,7 @@ def main():
     all_confounders = ['x_loyalty', 'x_spend', 'x_device', 'w_macro']
     cate_features = ['x_loyalty', 'x_device']
     
-    privacy_layer = DifferentialPrivacyLayer(random_seed=42)
+    privacy_layer = DifferentialPrivacyLayer(random_seed=settings.random_seed)
     epsilon_budgets = [0.1, 1.0, 10.0]
     
     logger.info(f"Target True ATE: {TRUE_ATE}")
@@ -48,7 +49,7 @@ def main():
         df_private = privacy_layer.apply_dp_to_dataset(df_raw, epsilon=eps, feature_configs=dp_configs)
         
         # Train DML
-        dml_private = DoubleMachineLearningEngine(n_splits=3, random_state=42)
+        dml_private = DoubleMachineLearningEngine(n_splits=settings.dml_cv_folds, random_state=settings.random_seed)
         dml_private.fit(
             df=df_private,
             treatment_col='treatment_price',

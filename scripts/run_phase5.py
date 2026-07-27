@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.causal.dml_engine import DoubleMachineLearningEngine
 from src.data.cohorting import KAnonymityCohorter
+from core.config import settings
 
 def main():
     logger.info("--- Starting Phase 5: The Fix (k-Anonymity Cohorting) ---")
@@ -39,7 +40,7 @@ def main():
         df_private = cohorter.apply_cohorting(df_raw, continuous_features=sensitive_features)
         
         # Train DML on the Cohorted Data
-        dml_private = DoubleMachineLearningEngine(n_splits=3, random_state=42)
+        dml_private = DoubleMachineLearningEngine(n_splits=settings.dml_cv_folds, random_state=settings.random_seed)
         dml_private.fit(
             df=df_private,
             treatment_col='treatment_price',

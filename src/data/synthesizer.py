@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 from typing import Tuple
+from core.config import settings
 
 class CausalDataSynthesizer:
     """
@@ -9,7 +10,7 @@ class CausalDataSynthesizer:
     Simulates continuous dynamic pricing assignment with both observed (X) 
     and unobserved (W) confounders.
     """
-    def __init__(self, n_samples: int = 50000, random_seed: int = 42):
+    def __init__(self, n_samples: int = 50000, random_seed: int = settings.random_seed):
         self.n_samples = n_samples
         self.seed = random_seed
         self.rng = np.random.default_rng(self.seed)

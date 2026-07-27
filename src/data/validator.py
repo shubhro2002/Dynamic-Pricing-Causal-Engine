@@ -4,13 +4,14 @@ import statsmodels.api as sm
 from scipy import stats
 from loguru import logger
 from typing import Dict, Any
+from core.config import settings
 
 class PreTreatmentValidator:
     """
     Executes pre-treatment statistical validation, power analysis, 
     and common support verification for continuous causal inference.
     """
-    def __init__(self, df: pd.DataFrame, random_seed: int = 42):
+    def __init__(self, df: pd.DataFrame, random_seed: int = settings.random_seed):
         self.df = df
         self.rng = np.random.default_rng(random_seed)
         

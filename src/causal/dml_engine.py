@@ -7,6 +7,7 @@ import joblib
 import os
 from loguru import logger
 from typing import List, Dict, Any, Optional
+from core.config import settings
 
 class DoubleMachineLearningEngine:
     """
@@ -14,7 +15,7 @@ class DoubleMachineLearningEngine:
     to estimate continuous Average Treatment Effects (ATE) and 
     Conditional Average Treatment Effects (CATE).
     """
-    def __init__(self, n_splits: int = 5, random_state: int = 42):
+    def __init__(self, n_splits: int = settings.dml_cv_folds, random_state: int = settings.random_seed):
         self.n_splits = n_splits
         self.random_state = random_state
         self.ate_model = None

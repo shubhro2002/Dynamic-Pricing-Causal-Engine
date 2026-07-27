@@ -2,17 +2,17 @@ import sys
 import os
 from loguru import logger
 
-# Ensure the src directory is in the Python path so we can import our modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.data.synthesizer import CausalDataSynthesizer
 from src.data.validator import PreTreatmentValidator
+from core.config import settings
 
 def main():
     logger.info("--- Starting Phase 1: Data Synthesis & Validation ---")
     
     # 1. Synthesize Data
-    synthesizer = CausalDataSynthesizer(n_samples=50000, random_seed=42)
+    synthesizer = CausalDataSynthesizer(n_samples=50000, random_seed=settings.random_seed)
     df, true_ate = synthesizer.generate_data()
     
     # Optional: Save to disk for Phase 2

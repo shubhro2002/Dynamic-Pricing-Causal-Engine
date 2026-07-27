@@ -2,13 +2,14 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 from typing import Dict, Any, Union
+from core.config import settings
 
 class DifferentialPrivacyLayer:
     """
     Advanced Differential Privacy layer implementing Pre-Clipping, 
     Domain Compression (Log-Transform), and Weighted Budget Allocation.
     """
-    def __init__(self, random_seed: int = 42):
+    def __init__(self, random_seed: int = settings.random_seed):
         self.rng = np.random.default_rng(random_seed)
         
     def add_laplace_noise(self, data: Union[pd.Series, np.ndarray], epsilon: float, sensitivity: float) -> Union[pd.Series, np.ndarray]:

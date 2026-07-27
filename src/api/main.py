@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from src.causal.dml_engine import DoubleMachineLearningEngine
 from src.api.schemas import CustomerProfile, ElasticityResponse
+from core.config import settings
 
 # Global reference to our loaded model
 ml_models = {}
@@ -33,7 +34,7 @@ async def lifespan(app: FastAPI):
         logger.info("API shut down, models cleared.")
 
 app = FastAPI(
-    title="Dynamic Pricing Causal Engine",
+    title=settings.app_name,
     description="Real-time Double Machine Learning API for Prescriptive Pricing Analytics.",
     version="1.0.0",
     lifespan=lifespan
