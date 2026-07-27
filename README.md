@@ -35,6 +35,7 @@ This system was built systematically across 5 distinct phases:
 
    - **Generalized Propensity Score (GPS)**: Verified the Positivity Assumption via residual variance to ensure sufficient exogenous price variation.
 
+![Phase 1 Execution](images/phase-1.png)
 
 ### Phase 2: Double Machine Learning Engine (`src/causal/`)
 
@@ -44,6 +45,8 @@ This system was built systematically across 5 distinct phases:
 
 - The Result: Successfully recovered the True ATE, dropping the naive error from *+9.6* down to near zero, and successfully mapping heterogeneous elasticity (CATE) across different customer segments.
 
+![Phase 2 Execution](images/phase-2.png)
+
 ### Phase 3: Asynchronous Production API (`src/api/`)
 
 - **Infrastructure**: Wrapped the serialized DML causal engine in a high-performance FastAPI application.
@@ -52,11 +55,17 @@ This system was built systematically across 5 distinct phases:
 
 - **Endpoint**: Exposes a real-time `/predict_elasticity` endpoint that ingests customer features and returns individualized price sensitivity scores and actionable markup/discount recommendations.
 
+![FastAPI(Phase 3): Request Example](images/request_body.png)
+
+![FastAPI(Phase 3): Response Example](images/response_body.png)
+
 ### Phase 4: The Privacy Paradox (Differential Privacy)
 
 - The Experiment: Investigated the application of Local Differential Privacy (Laplace Mechanism) on PII causal features (`x_spend`, `x_loyalty`).
 
 - The Finding: Mathematically proved that input-perturbation DP induces severe Measurement Error, blinding the nuisance models, destroying the **Conditional Independence Assumption (CIA)**, and causing catastrophic Residual Confounding (error spiking from *0.2* to *>12.0*).
+
+![Phase 4 Execution](images/phase-4.png)
 
 ### Phase 5: The Enterprise Fix ($k$-Anonymity)
 
@@ -64,6 +73,7 @@ This system was built systematically across 5 distinct phases:
 
 - The Result: By assigning users to *k*-sized cohorts (e.g., *k=500*) and utilizing median bounds, the pipeline successfully guarantees structural privacy while maintaining high-fidelity causal estimates (Error *< 0.35*).
 
+![Phase 5 Execution](images/phase-5.png)
 
 ## API Contract Example
 
@@ -127,8 +137,8 @@ Run the phases in order to see the data generation, model training, and privacy 
 ```bash
 python scripts/run_phase1.py  # Generates data and runs stats
 python scripts/run_phase2.py  # Trains the DML model and saves it
-python scripts/run_phase4.py  # Tests the Laplace DP limitation
-python scripts/run_phase5.py  # Tests the k-Anonymity cohorting fix
+python scripts/run_phase3.py  # Tests the Laplace DP limitation
+python scripts/run_phase4.py  # Tests the k-Anonymity cohorting fix
 ```
 
 3. Start the Inference API

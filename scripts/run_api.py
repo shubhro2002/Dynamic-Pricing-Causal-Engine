@@ -2,12 +2,13 @@ import uvicorn
 import os
 import sys
 from loguru import logger
-from core.config import settings
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from core.config import settings
+
 if __name__ == "__main__":
-    logger.info("Starting FastAPI Production Server for Causal Engine...")
+    logger.info(f"Starting {settings.app_name} in {settings.app_env} mode...")
 
     is_dev = settings.app_env.lower() == "development"
     
